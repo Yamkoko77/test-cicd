@@ -38,4 +38,6 @@ jobs:
           key: ${{ secrets.SERVER_KEY }}
           script: |
             docker pull ${{ secrets.DOCKER_USERNAME }}/test-cicd
+            docker stop test-cicd
+            docker rm test-cicd
             docker run -d --name test-cicd -p 3000:3000 ${{ secrets.DOCKER_USERNAME }}/test-cicd
