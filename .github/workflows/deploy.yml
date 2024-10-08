@@ -29,3 +29,13 @@ jobs:
           push: true
           platforms: linux/arm64
           tags: ${{ secrets.DOCKER_USERNAME }}/test-cicd
+
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@v1.1.0
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_KEY }}
+          script: |
+            docker pull ${{ secrets.DOCKER_USERNAME }}/test-cicd
+            docker run -d --name test-cicd -p 3000:3000 ${{ secrets.DOCKER_USERNAME }}/test-cicd
